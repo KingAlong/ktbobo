@@ -1,0 +1,33 @@
+{
+  "name": "ktbobo",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "an useless bot",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KingAlong/ktbobo.git"
+  },
+  "author": "kingalong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KingAlong/ktbobo/issues"
+  },
+  "homepage": "https://github.com/KingAlong/ktbobo#readme",
+  "dependencies": {
+    "file-box": "^1.4.12",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^3.2.1",
+    "node-schedule": "^2.1.0",
+    "tencentcloud-sdk-nodejs": "^4.0.300",
+    "wechaty": "^1.10.4",
+    "wechaty-plugin-contrib": "^1.0.18",
+    "wechaty-puppet-xp": "^1.10.19"
+  }
+}

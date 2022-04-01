@@ -1,0 +1,11 @@
+jingpinku:
+  appid: null
+  appkey: null
+  union_id: null
+tencentcloud:
+  SecretId: null
+  SecretKey: null
+reply:
+  null:
+    method: null
+    content: null
