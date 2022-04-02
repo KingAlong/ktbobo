@@ -98,4 +98,4 @@ function getMatch(content, key) {
 }
 
 
-export {sendFile, sendText, getMatch, getTimestamp, sleep, audioToText, getDynamicExtension}
+export {sendFile, sendText, getMatch, getTimestamp,audioToText, sleep, getDynamicExtension}

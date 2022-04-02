@@ -15,7 +15,7 @@
     "url": "git+https://github.com/KingAlong/ktbobo.git"
   },
   "author": "kingalong",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/KingAlong/ktbobo/issues"
   },
@@ -26,8 +26,7 @@
     "node-fetch": "^3.2.1",
     "node-schedule": "^2.1.0",
     "tencentcloud-sdk-nodejs": "^4.0.300",
-    "wechaty": "^1.10.4",
-    "wechaty-plugin-contrib": "^1.0.18",
-    "wechaty-puppet-xp": "^1.10.19"
+    "wechaty": "^1.18.1",
+    "wechaty-puppet-wechat": "^1.18.1"
   }
 }

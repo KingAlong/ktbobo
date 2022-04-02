@@ -1,46 +1,58 @@
-import fetch from "node-fetch"
 import {getDynamicExtension, sendText, sendFile} from "./utils/utils.js"
 import {baseReply} from "./utils/config.js"
 import pkg from 'node-schedule'
 import {WechatyBuilder} from 'wechaty'
-import {PuppetXp} from "wechaty-puppet-xp"
+import {PuppetWeChat} from "wechaty-puppet-wechat"
 
 const {scheduleJob} = pkg;
 
 
 //  二维码生成
-function onScan(qrcode) {
-    const qrcodeImageUrl = [
-        'https://wechaty.js.org/qrcode/',
-        encodeURIComponent(qrcode),
-    ].join('');
-    // push('wechaty登录', qrcodeImageUrl, 'b275895b9b9e4c44add2e4dea86d7a03')
-    console.log(qrcodeImageUrl)
+function onScan(payload) {
+    if (payload.qrcode) {
+        // Generate a QR Code online via
+        // http://goqr.me/api/doc/create-qr-code/
+        const qrcodeImageUrl = [
+            'https://wechaty.js.org/qrcode/',
+            encodeURIComponent(payload.qrcode),
+        ].join('')
+
+        console.info(`[${payload.status}] ${qrcodeImageUrl}\nScan QR Code above to log in: `)
+    } else {
+        console.info(`[${payload.status}]`)
+    }
+    // const qrcodeImageUrl = [
+    //     'https://wechaty.js.org/qrcode/',
+    //     encodeURIComponent(qrcode),
+    // ].join('');
+    // console.log(qrcodeImageUrl)
 }
 
 // 登录
-async function onLogin(user) {
-    try {
-        const dynamicExtension = await getDynamicExtension()
-        reply = Object.assign(baseReply, dynamicExtension)
-        console.log(`贴心小助理${user}登录了`)
-        console.log(reply)
-        // const contactList = await bot.Contact.findAll()
-        // contactList.forEach(contact => {
-        //     if (contact.friend()) {
-        //         console.log(contact.name())
-        //
-        //     }
-        // })
-        // const baby = await bot.Contact.find({name: '藍色'})
-        // if (baby) {
-        //     scheduleJob('0 7 * * *', async function () {
-        //         await sendText(sb, '宝贝早安')
-        //     })
-        // }
-    } catch (e) {
-        console.log(e)
-    }
+async function onLogin(payload) {
+    console.info(`${payload.contactId} login`)
+    puppet.messageSendText(payload.contactId, 'Wechaty login').catch(console.error)
+    // try {
+    //     const dynamicExtension = await getDynamicExtension()
+    //     reply = Object.assign(baseReply, dynamicExtension)
+    //     console.log(`贴心小助理${user}登录了`)
+    //     console.log(reply)
+    //     // const contactList = await bot.Contact.findAll()
+    //     // contactList.forEach(contact => {
+    //     //     if (contact.friend()) {
+    //     //         console.log(contact.name())
+    //     //
+    //     //     }
+    //     // })
+    //     // const baby = await bot.Contact.find({name: '藍色'})
+    //     // if (baby) {
+    //     //     scheduleJob('0 7 * * *', async function () {
+    //     //         await sendText(sb, '宝贝早安')
+    //     //     })
+    //     // }
+    // } catch (e) {
+    //     console.log(e)
+    // }
 }
 
 //登出
@@ -107,18 +119,18 @@ async function onFriendship(friendship) {
 
 
 let reply
-const puppet = new PuppetXp()
-const options = {
-    name: 'ktbobo',
-    puppet: puppet
-}
-const bot = WechatyBuilder.build(options)
-bot
+const puppet = new PuppetWeChat()
+puppet
     .on('scan', onScan)
     .on('login', onLogin)
     .on('logout', onLogout)
     .on('message', onMessage)
     .on('friendship', onFriendship)
-    .start()
 
+
+puppet.start().catch(async e => {
+    console.error('Bot start() fail:', e)
+    await puppet.stop()
+    process.exit(-1)
+})
 
